@@ -1,0 +1,7 @@
+require("ren01.plugins-setup")
+require("ren01.core.options")
+require("ren01.core.keymaps")
+require("ren01.core.colorscheme")
+require("ren01.plugins.nvim-tree")
+require("ren01.plugins.lualine")
+require("ren01.plugins.colorizer")
