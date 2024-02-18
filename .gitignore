@@ -6,6 +6,7 @@
 !.config
 !.config/alacritty
 !.config/bspwm
+!.config/betterlockscreenrc
 !.config/converseen
 !.config/gtk-3.0
 !.config/mpd
@@ -26,7 +27,7 @@
 !.local/share/fonts
 
 Pictures/*
-!Pictures/
+!Pictures
 !Pictures/Wallpapers
 
 !ren0-install

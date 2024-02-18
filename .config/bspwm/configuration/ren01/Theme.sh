@@ -27,9 +27,3 @@ bspc config window_gap 10
 if pidof -q bspc; then
 	pkill -9 bspc > /dev/null
 fi
-
-# Launch the bar and or eww widgets
-# eww -c $HOME/.config/bspwm/configuration/ren01/bar open bar &
- eww -c $HOME/.config/bspwm/configuration/ren01/dashboard daemon &
-# polybar -q tray -c $HOME/.config/bspwm/configuration/ren01/bar/polybar_tray.ini &
-

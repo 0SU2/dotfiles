@@ -1,0 +1,5 @@
+#!/bin/bash
+
+awk '/keymap.set/ {print "",$0,"\t",last,"</small>"} {last=""} /^#/{last=$0}' ~/.config/nvim/lua/options/keymaps.lua |
+    column -t -s $'\t' |
+    rofi -dmenu 

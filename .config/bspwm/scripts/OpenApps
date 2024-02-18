@@ -32,11 +32,7 @@ case "$1" in
 	firefox & disown;;
   --editor)
 	alacritty -e nvim & disown;;
-  --telegram)
-	telegram & disown;;
-  --whats)
-	whatsapp-nativefier --disable-gpu & disown;;
-  --soundcontrol)
+ --soundcontrol)
     pavucontrol & disown;;
   *)
     echo "Opción no válida";;

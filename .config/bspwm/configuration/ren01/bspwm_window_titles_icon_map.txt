@@ -1,8 +1,0 @@
-Google-chrome 
-Firefox 
-Code 
-jetbrains-phpstorm 
-Slack 
-kitty 
-Nautilus 
-Fallback ·

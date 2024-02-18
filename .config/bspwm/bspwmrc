@@ -8,23 +8,23 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 
 
 function get_values() {
-DEFNETWORK=$(ip route | grep '^default' | awk '{print $5}' | head -n1)
-CARD=$(ls -1 /sys/class/backlight/)
-power_supply_files=$(ls /sys/class/power_supply/)
+    DEFNETWORK=$(ip route | grep '^default' | awk '{print $5}' | head -n1)
+    CARD=$(ls -1 /sys/class/backlight/)
+    power_supply_files=$(ls /sys/class/power_supply/)
 
-for file in $power_supply_files
-do
-	if [ -e "/sys/class/power_supply/$file/capacity" ]; then
-		battery_file=$file
-    fi
+    for file in $power_supply_files
+    do
+	    if [ -e "/sys/class/power_supply/$file/capacity" ]; then
+		    battery_file=$file
+        fi
 
-    if [ -e "/sys/class/power_supply/$file/online" ]; then
-        adapter_file=$file
-    fi
-done
+        if [ -e "/sys/class/power_supply/$file/online" ]; then
+            adapter_file=$file
+        fi
+    done
 
-BATTERY="$battery_file"
-ADAPTER="$adapter_file"
+    BATTERY="$battery_file"
+    ADAPTER="$adapter_file"
 }
 
 set_values() {
@@ -42,11 +42,17 @@ set_values() {
 	fi
 }
 
-if [[ ! -f "$SFILE" ]]; then
-	get_values
-	set_values
-	touch $HOME/.config/bspwm/scripts/.sys
-fi
+# if [[ ! -f "$SFILE" ]]; then
+# 	get_values
+# 	set_values
+# 	touch $HOME/.config/bspwm/scripts/.sys
+# fi
+
+workspaces() {
+    namE=1
+    monitores=$(bspc query -M | head -1)
+    bspc monitor "${monitores}" -n $"namE" -d '1' '2' '3' '4' '5' '6'
+}
 
 monitors() {
     space=0
@@ -54,7 +60,7 @@ monitors() {
     # i create a query to store all the ports that are active 
     monitor_query=()
 
-    # whith the for y can obtain the name of that monitor just to 
+    # whith the for I can obtain the name of that monitor just to 
     # store in the query
     for monitor in $(xrandr | grep " connected " | awk '{ print$1 }'); do
         monitor_query[${space}]+=${monitor};
@@ -64,8 +70,12 @@ monitors() {
     # now that we have the names stored, we proceed to change the monitors
     if xrandr | grep "${monitor_query[1]} disconnected"; then
         xrandr --output "${monitor_query[1]}" --off --output "${monitor_query[0]}" --auto
+        # bspc monitor "${montiro_query[0]}" -d '1' '2' '3' '4' '5' '6' 
+        workspaces
     else
         xrandr --output "${monitor_query[0]}" --off --output "${monitor_query[1]}" --mode 1920x1080 --rate 165.00
+        # bspc monitor "${montiro_query[1]}" -d '1' '2' '3' '4' '5' '6' 
+        workspaces
     fi
 
     # in my case I only use one monitor for default, i really dont mind using two monitors
@@ -80,16 +90,10 @@ reset_panel() {
     setsid panel &
 }
 
-workspaces() {
-    namE=1
-    monitores=$(bspc query -M | head -1)
-    bspc monitor "${monitores}" -n $"namE" -d '1' '2' '3' '4' '5' '6'
-}
+# Monitors
+monitors
 
-workspaces
-
-bspc config external_rules_command $HOME/.config/bspwm/scripts/ExternalRules
-
+bspc config external_rules_command        $HOME/.config/bspwm/scripts/ExternalRules
 bspc config split_ratio                   0.52
 bspc config single_monocle                true
 bspc config borderless_monocle            false
@@ -104,10 +108,6 @@ bspc config pointer_action2               resize_side
 bspc config pointer_action3               resize_corner
 
 bspc wm --adopt-orphans
-
-
-# Monitors
-monitors
 
 
 # Terminate already running polybar, eww, picom, sxhkd and dunst instances
@@ -135,6 +135,9 @@ $HOME/.config/bspwm/configuration/$RICETHEME/Theme.sh
 # and add the one you use.
 nitrogen --restore &
 
+# Start the betterlockscreen with config files
+betterlockscreen -u /.config/betterlockscreen
+
 # Launch dunst notification daemon
 dunst -config $HOME/.config/bspwm/configuration/$RICETHEME/dunstrc &
 
@@ -146,6 +149,3 @@ pgrep -x polkit-gnome-au > /dev/null || /usr/lib/polkit-gnome/polkit-gnome-authe
 
 # Fix cursor
 xsetroot -cursor_name left_ptr
-
-# restart window titles daemon
-while pgrep -u $UID -f bspwm_window_titles >/dev/null; do pkill -f bspwm_window_titles; done bspwm_window_titles &

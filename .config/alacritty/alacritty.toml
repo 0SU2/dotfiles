@@ -1,7 +1,7 @@
 [window]
     dimensions = { columns = 0, lines = 0}
     padding = {x = 8, y = 6}
-    opacity = 1.0
+    opacity = 1
     startup_mode = "Windowed"
     decorations = "None"
     dynamic_title = true
@@ -14,15 +14,15 @@
     normal = { family = "JetBrainsMono Nerd Font" }
     bold = { family = "JetBrainsMono Nerd Font" }
     italic = { family = "JetBrainsMono Nerd Font" }
-    bold_italic = { family = "JetBrainsMono Nerf Font" }
-    size = 7.0
+    bold_italic = { family = "JetBrainsMono Nerd Font" }
+    size = 8
 
 [colors]
     [colors.primary]
         foreground = "#a5b6cf"
-        background = "#0d0f18"
+        background = "#191919"
     [colors.normal]
-        black    = '#3d414f'
+        black    = '#000000'
         red      = '#dd6777'
         green    = '#90ceaa'
         yellow   = '#ecd3a0'
@@ -32,7 +32,7 @@
         white    =  '#cbced3'
     
     [colors.bright]
-        black    = '#3d414f'
+        black    = '#535353'
         red      = '#dd6777'
         green    = '#90ceaa'
         yellow   = '#ecd3a0'
