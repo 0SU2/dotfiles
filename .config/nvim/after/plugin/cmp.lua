@@ -1,3 +1,4 @@
+-- code completion file
 local cmp = require('cmp')
 local luasnip = require('luasnip')
 
@@ -44,3 +45,6 @@ cmp.setup {
         { name = 'luasnip' },
     },
 }
+
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
