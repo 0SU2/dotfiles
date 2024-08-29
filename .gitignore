@@ -4,19 +4,16 @@
 .config/*
 # excluyed
 !.config
-!.config/alacritty
-!.config/bspwm
-!.config/betterlockscreenrc
-!.config/converseen
+!.config/hypr
+!.config/eww
 !.config/gtk-3.0
-!.config/mpd
-!.config/neofetch
-!.config/nitrogen
 !.config/nvim
-!.config/paru
-!.config/ranger
-!.config/systemd
-!.config/zsh
+!.config/rofi
+!.config/tmux
+!.config/yazi
+
+!.tmux
+!.tmux/plugins
 
 .local/*
 !.local
@@ -30,12 +27,10 @@ Pictures/*
 !Pictures
 !Pictures/Wallpapers
 
-!ren0-install
 !.github/
 !.gitignore
 !.zshrc
 !.bashrc
-!.xinitrc
 !README.md
 
 .config/zsh/zhistory

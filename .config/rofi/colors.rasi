@@ -1,0 +1,16 @@
+* {
+    background:     #191919;
+    background-alt: #E34039;
+    steady:         #343331FF;
+    foreground:     #FFFFFFFF;
+    border:         #6F6E69FF;
+    selected:       #61AFEFFF;
+}
+
+/*    background:     #191919;   */
+/*    background-alt: #282B31FF; */
+/*    foreground:     #FFFFFFFF; */
+/*    selected:       #61AFEFFF; */
+/*    active:         #98C379FF; */
+/*    urgent:         #E06C75FF; */
+
