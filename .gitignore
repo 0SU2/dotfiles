@@ -12,9 +12,6 @@
 !.config/tmux
 !.config/yazi
 
-!.tmux
-!.tmux/plugins
-
 .local/*
 !.local
 !.local/bin
