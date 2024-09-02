@@ -1,0 +1,37 @@
+#!/bin/sh
+
+volumen_percent() {
+    [ $(pamixer --get-mute) = "true" ] && echo "muted" && exit
+
+    VOLUMEN="$(pamixer --get-volume-human | tr -d '%')" 
+    echo ${VOLUMEN} 
+}
+
+volumen_icon() {
+    # check if its muted
+    [ $(pamixer --get-mute) = "true" ] && echo "" && exit
+
+    VOLUMEN="$(pamixer --get-volume)"
+    VOLUMEN_ICONOS=("" "" "" "" "" "")
+    VOLUMEN_INDEX=$(((VOLUMEN / 10) / 2))
+
+    VOLUMEN_ICON=${VOLUMEN_ICONOS[VOLUMEN_INDEX]}
+
+    echo "${VOLUMEN_ICON}"
+}
+
+toggle_muted() {
+    if [ "$(pamixer --get-mute)" == "true" ]; then
+        pamixer -u
+    else 
+        pamixer -m
+    fi
+}
+
+if [ "$1" = "--volumen" ]; then
+    volumen_percent
+elif [ "$1" = "--volumen-icono" ]; then
+    volumen_icon
+elif [ "$1" = "--toggle-muted" ]; then
+    toggle_muted
+fi

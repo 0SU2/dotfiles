@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if iwctl station wlan0 show | grep -q "Connected network"; then
+    icon="󰤨"
+    network=$(iwctl station wlan0 show | awk '/Connected network/ {print $3}')
+    status="Connected"
+else 
+    icon="󰤫"
+    status="Disconnected"
+    network="Not network"
+fi
+
+if [[ "$1" == "--wifi-icon" ]]; then
+    echo $icon
+elif [[ "$1" == "--wifi-status" ]]; then
+    echo $status
+elif [[ "$1" == "--wifi-network" ]]; then
+    echo $network
+fi
