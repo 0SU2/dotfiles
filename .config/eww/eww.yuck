@@ -1,0 +1,231 @@
+;; getting values
+;; time values
+(defpoll clock_hour :interval "5s" "date +\%k")
+(defpoll clock_minute :interval "5s" "date +\%M")
+(defpoll clock_date :interval "10h" "date '+d/%m'")
+
+(defpoll calendar_day :interval "10h" "date '+%d'")
+(defpoll calendar_month :interval "10h" "date '+%m'")
+(defpoll calendar_year :interval "10h" "date '+%Y'")
+
+;; battery values
+(defpoll battery :interval "5s" "scripts/battery --bat")
+(defpoll battery_icon :interval "5s" "scripts/battery --bat-icon")
+(defpoll battery_status :interval "5s" "scripts/battery --bat-status")
+
+;; wifi values
+(defpoll wifi_icon :interval "1m" "scripts/wifiModule --wifi-icon")
+(defpoll wifi_status :interval "1m" "scripts/wifiModule --wifi-status")
+(defpoll wifi_network :interval "1m" "scripts/wifiModule --wifi-network")
+(defvar wifi_rev false)
+
+;; volumen values
+(defpoll volumen_value :interval "3s" "scripts/volumen --volumen")
+(defpoll volumen_icon :interval "3s" "scripts/volumen --volumen-icono")
+
+;; new variables for workspaces
+(deflisten title_window :initial " " "scripts/currentWindow --windowName")
+(deflisten workspace :initial "[]" "bash scripts/workspace")
+(deflisten current_workspace :initial "1" "bash scripts/currentWorkspace")
+
+
+;; module to sep widgets in bar
+(defwidget sep []
+    (box :class "module-2" 
+    (label :class "separacion" :text "|"))
+)
+
+;; modules of bar
+(defwidget time [hour minuts]
+    (box :orientation "horizontal" :halign "end" :spacing 3 :class "time_module"
+        (eventbox :cursor "pointer"
+                  :onclick "$HOME/.config/eww/scripts/widgets calendar"
+            (box :class "calendar_box"
+                (label :text clock_hour :class "clock_hour_class")
+                (label :text ":" :class "clock_sep")
+                (label :text clock_minute :class "clock_minute_class"))) 
+    )
+)
+
+(defwidget title []
+    (box :orientation "h" :halign "center" :class "window_title" :vexpand "false" :hexpand "false"
+        (label :truncate true 
+               :text "${title_window == "" ? "I use arch btw" : title_window}"
+               :limit-width 40))
+)
+
+(defwidget myWorkspace []
+    (box :space-evenly true :class "works" :spacing 2
+        (label :text "${workspace}${current_workspace}" :visible false)
+        (for workspace in workspace 
+            (eventbox :onclick "hyprctl dispatch workspace ${workspace.id}" :cursor "pointer"
+                (box :class "${workspace.id == current_workspace ? "current" : ""} ${workspace.windows > 0 ? "occupied" : "empty"}"
+                    (label :text "${workspace.id == current_workspace ? "" : (workspace.windows > 0 ? "" : "")}")))))
+)
+
+(defwidget batteryStatus [battery]
+    (box :class "battery_module" :halign "center" :orientation "h"
+        (box :orientation "h"
+             :halign "center"
+             :class "${battery_status}"
+            (label :text "${battery}" :class "battery_text")
+            (label :text battery_icon :class "battery_icon"))
+    )
+)
+
+(defwidget wifi []
+    (box :orientation "h"
+         :class "wifi_module"
+         :tooltip wifi_network
+    (button :class "wifi" wifi_icon ))
+)
+
+(defvar volumen_rev false)
+(defwidget volumen []
+    (eventbox :onhover "${EWW_CMD} update volumen_rev=true" :onhoverlost "${EWW_CMD} update volumen_rev=false"
+        (box :class "volumen_module" :space-evenly false :orientation "h" :spacing 2
+            (button :onclick "scripts/volumen --toggle-muted" :class "volumen_icon" "${volumen_icon}")
+            (revealer :transition "slideleft"
+                      :reveal volumen_rev
+                      :duration "350ms"
+            (scale :class "volumen_bar"
+                   :value volumen_value
+                   :orientation "h"
+                   :tooltip "${volumen_value == "muted" ? "muted" : "${volumen_value}%"}"
+                   :max 100
+                   :min 0
+                   :onchange "pamixer --set-volume {}"
+            )))
+
+    )
+)
+
+(defpoll brightness_value :interval "1s" "brightnessctl -m -d amdgpu_bl1 | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'" )
+(defvar brightness_var false)
+(defwidget brightness []
+    (eventbox :onhover "${EWW_CMD} update brightness_var=true" :onhoverlost "${EWW_CMD} update brightness_var=false"
+        (box :class "brightness_moduel" :space-evenly false :orientation "h" :spacing 2
+            (button :class "brightness_icon" "󰃞")
+            (revealer :transition "slideleft"
+                      :reveal brightness_var
+                      :duration "350ms"
+                (scale :class "brightness_bar"
+                       :value brightness_value
+                       :tooltip "${brightness_value}%"
+                       :max 100
+                       :min 0
+                       :onchange "brightnessctl s {}%"))))
+)
+
+(defwidget profile []
+    (eventbox :cursor "pointer" :onclick "bash ~/.config/rofi/powermenu.sh &"
+        (box :orientation "h" :class "profile" "󰣇"))
+)
+
+;; widgets from left
+(defwidget left []
+    (box :orientation "h"
+         :space-evenly false
+         :halign "end"
+         :class "left_modules"
+    (brightness)
+    (volumen)
+    (wifi)
+    (batteryStatus :battery battery)
+    (profile)
+    )
+)
+
+
+
+;; (defwidget wifiModule [] 
+;;     (eventbox :onhover "${EWW_CMD} update wifi_rev=true"
+;;               :onhoverlost "${EWW_CMD} update wifi_rev=false"
+;;         (box :orientation "h"
+;;              :halign "center"
+;;              :class "wifi_${wifi_status}"
+;;              (label :text "${wifi_icon}"
+;;                     :class "wifi_icon")
+;;         (revealer :transition "slideright"
+;;                   :reveal wifi_rev
+;;                   :duration "350ms"
+;;             (label :text wifi_network
+;;                    :class "wifi_network_essid"
+;;                    ))))
+;; )
+
+
+;; widgets from center
+(defwidget center []
+    (box :orientation "h"
+         :space-evenly false
+         :halign "center"
+         :class "center_modules"
+         :vexpand "false"
+         :hexpand "false"
+    (title)) ;; still in progress to current tab working
+)
+
+;; widgets from right
+(defwidget right [] 
+    (box :orientation "h"
+         :space-evenly false
+         :halign "start"
+         :class "right_modules"
+    (time :hour clock_hour :minuts clock_minute)
+    (myWorkspace))
+)
+
+;; bar
+(defwidget customBar []
+    (box :orientation "horizontal"
+         :class "bar_style"
+         :vexpand "false"
+         :hexpand "false"
+        (right)
+        (center)
+        (left)
+    )
+)
+
+(defwindow bar
+          :monitor 0
+          :geometry (geometry :x "0%"
+                       :y "0px"
+                       :width "100%"
+                       :height "2%"
+                       :anchor "bottom center")
+          :exclusive "true"
+          :windowtype "dock"
+    (customBar)
+)
+
+;; calender window
+(defwidget cal []
+	(box :class "cal-box" 
+		 :orientation "v"
+	(box :class "cal-inner-box"
+	(calendar :class "cal" 
+			  :day calendar_day 
+			  :month calendar_month 
+			  :year calendar_year))))
+
+(defwindow calendar
+           :monitor 0
+           :geometry (geometry :x "15px"
+                               :y "69.5%"
+                               :anchor "top left"
+                               :width "290px"
+                               :height "60px")
+    (cal))
+
+;; testing
+(deflisten notifs :initial "" "~/virtualPython/bin/python3 ~/.config/eww/main.py")
+
+(defwindow notifications 
+           :monitor 0
+           :geometry (geometry :x "20px"
+                               :y "20px"
+                               :anchor "top right")
+           :stacking "overlay"
+            (literal :content notifs))

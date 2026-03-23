@@ -1,0 +1,261 @@
+* {
+  all: unset; //Unsets everything so you can style everything from scratch
+  font-family: JetBrainsMono Nerd Font;
+}
+
+tooltip {
+  background-color: #111111;
+  border-radius: 6px;
+  padding: 4rem 3rem 4rem 3rem;
+  color: #fff;
+  font-size: 16px;
+}
+
+//Global Styles
+.bar_style {
+  background-color: #181818;
+}
+
+// workspace module style
+.works {
+  font-size: 20px;
+  font-weight: normal;
+  margin: 5px 0px 5px 5px;
+  padding: 5px 5px 5px 10px;
+  background: #222222;
+  border-radius: 8px;
+}
+
+.current, .occupied, .empty {
+  margin: 0px 15px 0px 0px;
+}
+
+.current, .occupied {
+  color: #8c8c8c;
+}
+
+// actual title window
+.window_title {
+  border-radius: 8px;
+  background: #222222;
+  font-size: 15px;
+  font-weight: normal;
+  padding: 0px 15px 0px 15px;
+  margin: 5px 10px 5px 10px;
+}
+
+// clock module style
+.time_module {
+  border-radius: 8px;
+  background: #222222;
+  padding: 0px 10px 0px 20px;
+  margin: 5px 15px 5px 20px;
+}
+
+.calendar_box {
+  margin: 0px 10px 0px 0px;
+
+  .clock_sep {
+    font-size: 20px;
+    color: #bfc9db;
+  }
+
+  .clock_hour_class, .clock_minute_class {
+    font-size: 23px;
+  }
+}
+
+
+// battery module
+.battery_module {
+  border-radius: 8px;
+  background: #222222; 
+  padding: 5px 10px 5px 15px;
+  margin: 5px 5px 5px 10px;
+  .Charging {
+    color: #48aefa;
+    &{
+      font-size: 20px;
+    }
+  }
+
+  .Discharging {
+    color: #81ff6f;
+    &{
+      font-size: 20px;
+    }
+  }
+}
+
+// separator module
+.separacion {
+  color: #8f8f8f;
+  font-size: 20px;
+  margin: 0px 10px 0px 10px;
+}
+
+// wifi module
+.wifi_module {
+  border-radius: 8px;
+  background: #222222; 
+  padding: 5px 18px 5px 12px;
+  margin: 5px 5px 5px 15px;
+  color: #6ffff2;
+  &{
+    font-size: 20px;
+  }
+
+}
+
+// Calendar widget
+.cal-box {
+  background-color: #181818;
+  font-family: JetBrainsMono Nerd Font;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 20px;
+  
+  .cal-inner-box {
+    padding: 10px 20px 10px 20px;
+
+    .cal {
+      &.highlight {
+        padding: 40px;
+      }
+      
+      padding: 2px 5px 2px 5px;
+      margin-left: 10px;
+    }
+  }
+}
+
+calendar:selected {
+  color: #7aa2f7;
+}
+
+calendar.header {
+  color: #ffc04a;
+  font-weight: bold;
+}
+
+calendar.button {
+  color: #fff;
+}
+
+calendar.highlight {
+  color: #9c9c9c;
+  font-weight: bold;
+}
+
+calendar:indeterminate {
+  color: #313131;
+}
+
+// profile
+.profile {
+  font-size: 1.5rem;
+  color: #0f94d2;
+  margin: 5px 10px 5px 10px;
+  padding: 5px 18px 5px 13px;
+  border-radius: 10px;
+  background: #222222; 
+
+}
+
+// powermenu
+.bigpowermenu {
+  font-size: 3rem;
+  background: #000;
+  border-radius: 10px;
+  padding: 2rem;
+
+  .shutdown {
+    background-color: #252525;
+    border-radius: 10px;
+    padding: 5px 0px 5px 10px;
+    margin: 0.5rem 0.5rem 0.5rem 1rem;
+  }
+
+  .logout {
+    background-color: #252525;
+    border-radius: 10px;
+    padding: 5px 20px 5px 15px;
+    margin: 0.5rem 1rem 0.5rem 0.5rem;
+  }
+
+  .reboot, .lock, .sleep {
+    background-color: #252525;
+    border-radius: 10px;
+    padding: 5px 25px 5px 15px;
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+
+}
+
+// volumen module
+.volumen_module {
+  background: #252525;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px 13px 5px 13px;
+  margin: 5px 2px 5px 10px;
+}
+
+.volumen_icon {
+  padding: 0px 8px 0px 0px;
+}
+
+trough highlight {
+  background-image: linear-gradient(to right, #afcee0 30%, #a1bdce 50%, #77a5bf 100% *50);
+  border-radius: 4px;
+}
+
+scale trough {
+  all: unset;
+  background-color: #2E3440;
+  border-radius: 9px;
+  min-height: 8px;
+  min-width: 70px;
+  margin: 0px 5px 0px 15px;
+}
+
+// brightness
+.brightness_moduel {
+  background: #252525;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 5px 13px 5px 13px;
+  margin: 5px 10px 5px 10px;
+ 
+}
+
+.brightness_icon {
+  color: #ffdd33;
+  padding: 0px 6px 0px 0px;
+ 
+}
+
+//test
+.notifications {
+    min-height: 0px;
+    background-color: transparent;
+}
+
+.notif {
+    background-color: #282828;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border-width: 2;
+    border-color: #fabd2f;
+}
+
+.notif image {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.title_yes {
+  font-weight: bolder;
+  color: #ffdd33;
+}

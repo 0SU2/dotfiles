@@ -1,0 +1,80 @@
+#!/bin/sh
+
+calendar(){
+    LOCK_FILE="$HOME/.cache/eww-calendar.lock"
+    EWW_BIN="$HOME/.local/bin/eww/eww"
+
+    run() {
+        ${EWW_BIN} -c $HOME/.config/eww open calendar
+    }
+
+    # Run eww daemon if not running
+    if [[ ! `pidof eww` ]]; then
+        ${EWW_BIN} daemon
+        sleep 1
+    fi
+
+    # Open widgets
+    if [[ ! -f "$LOCK_FILE" ]]; then
+        touch "$LOCK_FILE"
+        run
+    else
+        ${EWW_BIN} -c $HOME/.config/eww close calendar
+        rm "$LOCK_FILE"
+    fi
+}
+
+powermenu() {
+    LOCK_FILE="$HOME/.cache/powermenu.lock"
+    EWW_BIN="$HOME/.local/bin/eww/eww"
+
+    run() {
+        ${EWW_BIN} -c $HOME/.config/eww open powermenu
+    }
+
+    # Run eww daemon if not running
+    if [[ ! `pidof eww` ]]; then
+        ${EWW_BIN} daemon
+        sleep 1
+    fi
+
+    # Open widgets
+    if [[ ! -f "$LOCK_FILE" ]]; then
+        touch "$LOCK_FILE"
+        run
+    else
+        ${EWW_BIN} -c $HOME/.config/eww close powermenu
+        rm "$LOCK_FILE"
+    fi
+
+}
+
+lockscreen() {
+    LOCK_FILE="$HOME/.cache/powermenu.lock"
+    EWW_BIN="$HOME/.local/bin/eww/eww"
+
+    run() {
+        ${EWW_BIN} -c $HOME/.config/eww open powermenu
+    }
+   
+    # Open widgets
+    if [[ ! -f "$LOCK_FILE" ]]; then
+        touch "$LOCK_FILE"
+        run
+    else
+        ${EWW_BIN} -c $HOME/.config/eww close powermenu
+        rm "$LOCK_FILE"
+        hyprlock
+    fi
+   
+}
+
+if [ "$1" = "lockscreen" ]; then
+    lockscreen
+elif [ "$1" = "powermenu" ]; then
+    powermenu
+elif [ "$1" = "audio" ]; then
+    pavucontrol
+elif [ "$1" = "calendar" ]; then
+    calendar
+fi
