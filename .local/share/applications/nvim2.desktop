@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Exec=bash -c "$HOME/.local/share/AppImage/nvim-linux-x86_64.appimage"
+Name=NeoVim 2
+Terminal=true
+Categories=Development;IDE;

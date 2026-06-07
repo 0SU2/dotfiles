@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+OPTION=$1
+
+function start_ip_static() {
+
+	sudo systemctl stop iwd.service
+	sudo systemctl disable iwd.service
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "iwd didnt work, maybe its already stop" 
+		exit
+	fi
+	
+	sudo netctl enable practica4Redes
+	sudo netctl start practica4Redes
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "netctl didnt work"
+		exit
+	fi
+	echo "done!"
+}
+
+function stop_ip_static() {
+
+	sudo netctl stop practica4Redes
+	sudo netctl disable practica4Redes
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "netctl didnt work"
+		exit
+	fi
+
+	sudo systemctl enable iwd.service
+	sudo systemctl start iwd.service
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "iwd didnt work, maybe its already stop" 
+		exit
+	fi
+	
+	echo "done!"
+}
+
+case $OPTION in
+	"--start")
+		start_ip_static
+		;;
+	"--stop")
+		stop_ip_static
+		;;
+esac

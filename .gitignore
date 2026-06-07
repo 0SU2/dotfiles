@@ -1,6 +1,5 @@
 # ignore all files
 /*
-
 .config/*
 # excluyed
 !.config
@@ -14,10 +13,19 @@
 
 .local/*
 !.local
-!.local/bin
-!.local/share
+
+.local/bin/*
+!.local/bin/
+!.local/bin/StartDHCPCD
+!.local/bin/StartStaticIP
+!.local/bin/swww
+!.local/bin/swww-daemon
+
 .local/share/*
+.local/share/applications/*
+!.local/share
 !.local/share/applications
+!.local/share/applications/nvim2.desktop
 !.local/share/fonts
 
 Pictures/*

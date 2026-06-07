@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+OPTION=$1
+
+function start_dhcpcd() {
+	sudo systemctl stop iwd.service
+	sudo systemctl disable iwd.service
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "iwd didnt work, maybe its already stop" 
+		exit
+	fi
+	
+	sudo systemctl enable dhcpcd.service
+	sudo systemctl start dhcpcd.service
+	# Enable networkmanager
+	sudo systemctl enable NetworkManager.service
+	sudo systemctl start NetworkManager.service
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "iwd didnt work, maybe its already stop" 
+		exit
+	fi
+	echo "done!"
+}
+
+function stop_dhcpcd() {
+
+	# enable dhcpcd
+	sudo systemctl stop dhcpcd.service
+	sudo systemctl disable dhcpcd.service
+	# Enable networkmanager
+	sudo systemctl stop NetworkManager.service
+	sudo systemctl disable NetworkManager.service
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "networkmanager didnt work"
+		exit
+	fi
+	sudo systemctl enable iwd.service
+	sudo systemctl start iwd.service
+	
+	if [ $? -ne 0 ]; then
+		>&2 echo "iwd didnt work"
+		exit
+	fi
+	
+	echo "done!"
+}
+
+case $OPTION in
+	"--start")
+		start_dhcpcd
+		;;
+	"--stop")
+		stop_dhcpcd
+		;;
+esac
