@@ -2,14 +2,14 @@
 
 configuration {
     show-icons: false;
-    font: "JetBrainsMono Nerd Font 20";
+    font: "Iosevka SS01 12";
 }
 
 window {
     location: center;
     anchor: center;
-    height: 135 px;
-    width: 540 px;
+    height: 135px;
+    width: 540px;
     y-offset: 880px;
     enabled: true;
     padding: 15px;
@@ -31,19 +31,20 @@ listview {
     cycle: true;
     dynamic: true;
     layout: horizontal;
-    margin: 15px;
+    margin: 15.5px;
     border-color: @border;
     background-color: transparent;
     text-color: @foreground;
     cursor: "default";
+    spacing: 0.6em;
 }
 
 element {
-    height: 110 px;
-    width: 93 px;
+    height: 100px;
+    width: 150px;
     enabled: true;
-    padding: 15px 15px;
-    background-color: @background;
+    padding: 1.2em;
+    background-color: @background-norm;
     text-color: @foreground;
 }
 
@@ -56,6 +57,7 @@ element-text {
 }
 
 element selected.normal {
-    background-color: var(background-alt);
-    text-color: var(foreground);
+    background-color: @background-alt;
+    text-color: @foreground;
 }
+
