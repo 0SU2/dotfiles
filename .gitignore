@@ -35,10 +35,12 @@ Pictures/*
 !.github/
 !.gitattributes
 !.gitignore
-!.zshrc
 !.bashrc
 !README.md
+!.emacs*
+!.tmux.conf
 
+*~
 .config/zsh/zhistory
 **.config/ranger/colorschemes/__pycache__
 **.config/ranger/plugins/__pycache__
