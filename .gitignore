@@ -38,6 +38,7 @@ Pictures/*
 !.bashrc
 !README.md
 !.emacs*
+.emacs.d/
 !.tmux.conf
 
 *~
